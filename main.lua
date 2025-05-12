@@ -20,7 +20,7 @@ function Main()
 
    for currentDepth = currentY, depthTargetAtFeet, -1 do
       lib.startLayer()
-      log(string.format("Starting a new layer at a depth of: %i", currentDepth - depthTargetAtFeet))
+      log(string.format("Starting a new layer at a depth of y: %i", currentDepth))
 
       if isOdd then
          lib.digOdd(holeSize, log)
