@@ -1,6 +1,6 @@
-local utils = require("opt/Vbore/utils");
-local lib = require("opt/Vbore/lib");
-local logger = require("opt/Vbore/logger");
+local utils = require("utils");
+local lib = require("lib");
+local logger = require("logger");
 
 function Main()
    local file, log = logger.init()
