@@ -38,6 +38,7 @@ local function excavateToSize(holeSize)
 
     for _ = 0, (holeSize - 1), 1 do
         for _ = 0, (holeSize - 1), 1 do
+            Log("Digging...")
             turtle.dig()
             turtle.forward()
         end
