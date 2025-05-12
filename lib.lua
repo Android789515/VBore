@@ -40,7 +40,7 @@ local function excavateToSize(holeSize)
             turtle.forward()
         end
 
-        if rotation then
+        if rotation == 1 then
             turtle.turnLeft()
             turtle.dig()
             turtle.forward()
