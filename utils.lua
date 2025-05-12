@@ -1,9 +1,9 @@
-local function prompt(PromptString)
-   write(PromptString)
+local function prompt(promptString)
+   write(promptString)
 
    local response = read()
 
-   Log(response)
+   Log(string.format("%s response (%s)", promptString, response))
 
    return response
 end
