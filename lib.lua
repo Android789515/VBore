@@ -32,9 +32,8 @@ end
 local function digOdd(holeSize, log)
    for z = 1, holeSize, 1 do
       for x = 1, holeSize, 1 do
-         turtle.dig()
-
          if x < (holeSize - 1) then
+            turtle.dig()
             turtle.forward()
          end
       end
