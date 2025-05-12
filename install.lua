@@ -5,3 +5,5 @@ if not(hasGitClone) then
 end
 
 shell.run("gitclone", "Android789515", "Vbore", "main", "opt")
+
+shell.run("mv", "opt/Vbore/V-Bore.lua", "/")
