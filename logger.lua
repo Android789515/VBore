@@ -3,6 +3,7 @@ local function init()
    
    return logFile, function (message)
       logFile.write(message)
+      logFile.write("\n")
    end
 end
 
