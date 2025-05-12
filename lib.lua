@@ -57,7 +57,7 @@ local function excavateToSize(holeSize)
 end
 
 local function hasEnoughFuel(fuelRequirement)
-    return turtle.getFuelLevel >= fuelRequirement
+    return turtle.getFuelLevel() >= fuelRequirement
 end
 
 local function refuel(slot)
