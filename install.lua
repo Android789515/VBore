@@ -1,6 +1,6 @@
 local hasGitClone = shell.resolve("gitclone")
 
-if not(hasGitClone) then
+if not (hasGitClone) then
    shell.run("wget", "https://raw.githubusercontent.com/Konijima/cc-git-clone/master/gitclone.lua")
 end
 

@@ -1,62 +1,111 @@
-local function startLayer()
-   turtle.digDown()
-   turtle.down()
+local function traverse(distance, position)
+    if position == distance then
+        Log(string.format("Successfully traversed %i blocks.", distance))
+        return
+    else
+        if turtle.forward() then
+            Log("Traversing...")
+            traverse(distance, position + 1)
+        else
+            Crash("Turtle got stuck!")
+        end
+    end
 end
 
-local function homeTurtle(holeSize, partial)
-   turtle.turnRight()
-   turtle.turnRight()
+local function home(holeSize)
+    local isEven = holeSize % 2 == 0
 
-   for x = 1, (holeSize - 2), 1 do
-      turtle.forward()
-   end
+    if isEven then
+        turtle.turnRight()
+        traverse(holeSize, 0)
+    else
+        turtle.turnRight()
+        turtle.turnRight()
+        traverse(holeSize, 0)
 
-   if not (partial) then
-      turtle.turnRight()
-
-      for _ = 1, (holeSize - 1), 1 do
-         turtle.forward()
-      end
-
-      turtle.turnRight()
-   end
+        turtle.turnRight()
+        traverse(holeSize, 0)
+    end
 end
 
-local function startNextZ()
-   turtle.turnLeft()
-   turtle.dig()
-   turtle.forward()
-   turtle.turnLeft()
-end
+local function excavateToSize(holeSize)
+    local rotation = 0
 
-local function digOdd(holeSize, log)
-   for z = 1, holeSize, 1 do
-      for x = 1, holeSize, 1 do
-         if holeSize > 1 then
+    turtle.digDown()
+    turtle.down()
+
+    for _ = 0, (holeSize - 1), 1 do
+        for _ = 0, (holeSize - 1), 1 do
             turtle.dig()
-         end
-
-         if x < (holeSize - 1) then
             turtle.forward()
-         end
-      end
+        end
 
-      if z < holeSize then
-         homeTurtle(holeSize, true)
-         log("Partially homing...")
-         
-         startNextZ()
-         log("Starting next Z...")
-      end
-   end
+        if rotation then
+            turtle.turnLeft()
+            turtle.dig()
+            turtle.forward()
+            turtle.turnLeft()
+        else
+            turtle.turnRight()
+            turtle.dig()
+            turtle.forward()
+            turtle.turnRight()
+        end
 
-   homeTurtle(holeSize, false)
-   log("Homing...")
+        rotation = math.abs(rotation - 1)
+    end
+end
+
+local function hasEnoughFuel(fuelRequirement)
+    return turtle.getFuelLevel >= fuelRequirement
+end
+
+local function refuel(slot)
+    local maxSlot = 15
+
+    turtle.select(slot)
+    Log(string.format("Selected slot %i for refueling", slot))
+
+    if turtle.refuel() then
+        Log(string.format("Successfully refueled from slot %i.", slot))
+        return
+    elseif slot <= maxSlot then
+        Log("No fuel in this slot.")
+        refuel(slot + 1)
+    end
+end
+
+local function excavateLayer(holeSize)
+    if hasEnoughFuel(holeSize ^ 2) then
+        Log("Turtle has enough fuel for the next layer.")
+
+        if holeSize == 1 then
+            turtle.digDown()
+        else
+            excavateToSize(holeSize)
+        end
+    else
+        Log("Turtle does not have enough fuel for the next layer.  Attempting to refuel")
+        refuel(0)
+        excavateLayer(holeSize)
+    end
+end
+
+local function digLayerDown(targetDepth, currentDepth, holeSize)
+    if currentDepth == targetDepth then
+        Log(string.format("Target depth of y: %i reached.", targetDepth))
+        return
+    else
+        Log(string.format("Excavating %ix%i layer at y: %i.", holeSize, holeSize, currentDepth))
+        excavateLayer(holeSize)
+
+        Log("Homing...")
+        home(holeSize)
+    end
+
+    digLayerDown(targetDepth, currentDepth - 1)
 end
 
 return {
-   startLayer = startLayer,
-   homeTurtle = homeTurtle,
-   startNextZ = startNextZ,
-   digOdd = digOdd,
+    digLayerDown = digLayerDown,
 }
