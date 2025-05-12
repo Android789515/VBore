@@ -16,11 +16,9 @@ function Main()
 
    local isOdd = holeSize % 2 == 1
 
-   local depthTargetAtFeet = depthTarget - 1
-
-   for _ = currentY, depthTargetAtFeet, -1 do
+   for currentDepth = currentY, depthTarget, -1 do
       lib.startLayer()
-      log(string.format("Starting a new layer at a depth of: %i", currentY - depthTargetAtFeet))
+      log(string.format("Starting a new layer at a depth of: %i", currentDepth - depthTarget))
 
       if isOdd then
          lib.digOdd(holeSize, log)
