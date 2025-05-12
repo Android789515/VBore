@@ -1,6 +1,6 @@
-local utils = require("./utils");
-local lib = require("./lib");
-local logger = require("./logger");
+local utils = require("utils");
+local lib = require("lib");
+local logger = require("logger");
 
 function Main()
    local file, log = logger.init()
