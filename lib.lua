@@ -30,6 +30,24 @@ local function home(holeSize)
     end
 end
 
+local function digNextSection(rotation)
+    if rotation == 1 then
+        Log("Starting even section...")
+        turtle.turnLeft()
+        turtle.dig()
+        turtle.forward()
+        turtle.turnLeft()
+    else
+        Log("Starting odd section...")
+        turtle.turnRight()
+        turtle.dig()
+        turtle.forward()
+        turtle.turnRight()
+    end
+
+    return math.abs(rotation - 1)
+end
+
 local function excavateToSize(holeSize)
     local rotation = 0
 
@@ -37,27 +55,15 @@ local function excavateToSize(holeSize)
     turtle.down()
 
     for z = 0, (holeSize - 1), 1 do
-        for x = 1, (holeSize - 1), 1 do
+        for x = 0, (holeSize - 2), 1 do
             Log(string.format("Digging: ( %i, %i )", x, z))
             turtle.dig()
             turtle.forward()
         end
 
-        if rotation == 1 then
-            Log("Starting even section...")
-            turtle.turnLeft()
-            turtle.dig()
-            turtle.forward()
-            turtle.turnLeft()
-        else
-            Log("Starting odd section...")
-            turtle.turnRight()
-            turtle.dig()
-            turtle.forward()
-            turtle.turnRight()
+        if z < holeSize - 1 then
+            rotation = digNextSection(rotation)
         end
-
-        rotation = math.abs(rotation - 1)
     end
 end
 
