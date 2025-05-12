@@ -36,19 +36,21 @@ local function excavateToSize(holeSize)
     turtle.digDown()
     turtle.down()
 
-    for _ = 1, (holeSize - 1), 1 do
-        for _ = 1, (holeSize - 1), 1 do
-            Log("Digging...")
+    for z = 1, (holeSize - 1), 1 do
+        for x = 1, (holeSize - 1), 1 do
+            Log(string.format("Digging: ( %i, %i )", x, z))
             turtle.dig()
             turtle.forward()
         end
 
         if rotation == 1 then
+            Log("Starting even section...")
             turtle.turnLeft()
             turtle.dig()
             turtle.forward()
             turtle.turnLeft()
         else
+            Log("Starting odd section...")
             turtle.turnRight()
             turtle.dig()
             turtle.forward()
