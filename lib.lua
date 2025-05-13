@@ -3,11 +3,13 @@ local function traverse(distance, position)
         Log(string.format("Successfully traversed %i blocks.", distance))
         return
     else
-        if turtle.forward() then
+        local error, movedForward = turtle.forward()
+
+        if movedForward then
             Log("Traversing...")
             traverse(distance, position + 1)
         else
-            Crash("Turtle got stuck!")
+            Crash(string.format("Turtle got stuck because of: %s", error))
         end
     end
 end
