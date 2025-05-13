@@ -74,7 +74,7 @@ local function hasEnoughFuel(fuelRequirement)
 end
 
 local function refuel(slot)
-    local maxSlot = 15
+    local maxSlot = 16
 
     turtle.select(slot)
     Log(string.format("Selected slot %i for refueling", slot))
@@ -99,7 +99,7 @@ local function excavateLayer(holeSize)
         end
     else
         Log("Turtle does not have enough fuel for the next layer.  Attempting to refuel")
-        refuel(0)
+        refuel(1)
         excavateLayer(holeSize)
     end
 end
