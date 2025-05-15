@@ -89,7 +89,7 @@ local function refuel(slot)
    if turtle.refuel() then
       Log(string.format("Successfully refueled from slot %i.", slot))
       return
-   elseif slot <= maxSlot then
+   elseif slot < maxSlot then
       Log("No fuel in this slot.")
       refuel(slot + 1)
    end
