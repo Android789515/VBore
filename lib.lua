@@ -3,7 +3,13 @@ local function traverse(distance, position)
       Log(string.format("Successfully traversed %i blocks.", distance))
       return
    else
-      Log(string.format("The block in front of the turtle is: %s", turtle.inspect()))
+      local inspectSuccess, data = turtle.inspect()
+
+      if inspectSuccess then
+         Log(string.format("The block in front of the turtle is: %s\nWith metadata: %s", data.name, data.metadata))
+      else
+         Log(string.format("Could not inspect: %s", data))
+      end
       local movedForward, error = turtle.forward()
 
       if movedForward then
