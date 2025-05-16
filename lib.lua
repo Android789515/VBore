@@ -26,15 +26,15 @@ local function home(holeSize)
 
    if isEven then
       turtle.turnRight()
-      traverse(holeSize, 0)
+      traverse(holeSize, 1)
       turtle.turnRight()
    else
       turtle.turnRight()
       turtle.turnRight()
-      traverse(holeSize, 0)
+      traverse(holeSize, 1)
 
       turtle.turnRight()
-      traverse(holeSize, 0)
+      traverse(holeSize, 1)
       turtle.turnRight()
    end
 end
