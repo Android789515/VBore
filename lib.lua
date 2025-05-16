@@ -123,7 +123,7 @@ local function digLayerDown(targetDepth, currentDepth, holeSize)
       home(holeSize)
    end
 
-   digLayerDown(targetDepth, currentDepth - 1)
+   digLayerDown(targetDepth, currentDepth - 1, holeSize)
 end
 
 return {
